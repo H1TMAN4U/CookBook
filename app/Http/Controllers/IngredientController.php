@@ -15,12 +15,12 @@ class IngredientController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function view()
-     {
-         $IngredientData= Ingredient::find(1);
-         $Recipe= Recipe::orderBy('name', 'asc')->get();
-         return view('ingredient', compact('IngredientData', 'Recipe'));
-     }
+    //  public function view()
+    //  {
+    //      $IngredientData= Ingredient::find(1);
+    //      $Recipe= Recipe::orderBy('name', 'asc')->get();
+    //      return view('ingredient', compact('IngredientData', 'Recipe'));
+    //  }
     public function index()
     {
         //
@@ -92,12 +92,13 @@ class IngredientController extends Controller
     {
         //
     }
-    public function search(Request $request)
-    {
-        $search_text=$_GET["query"];
-        $search_text = $request->query;
-        $ingredient = Ingredient::where('name','LIKE', '%'.$search_text.'%')->get();
-        return view('products.search',["ingredient"=>$ingredient]);
-    }
+    // public function search(Request $request)
+    // {
+    //     $search_text=$_GET["query"];
+    //     $search_text = $request->query;
+    //     $recipe = Recipe::where('name','LIKE', '%'.$search_text.'%')->get();
+    //     return view('recipe.search',
+    //     ["recipe"=>$recipe], compact('recipe') );
+    // }
     
 }

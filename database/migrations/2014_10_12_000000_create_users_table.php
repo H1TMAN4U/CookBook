@@ -24,12 +24,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        // $date=Carbon::now();
-        // DB::table('users')->insert(
-        //     array(
-        //         ['name' => 'Admin','Admin@Admin.com','Admin@Admin.com', 'admin123', 'created_at'=>$date,'updated_at'=>$date]
-        //     )
-        // );
     }
 
     /**

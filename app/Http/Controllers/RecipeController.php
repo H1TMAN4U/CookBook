@@ -26,10 +26,9 @@ class RecipeController extends Controller
     public function index()
     {
         $id=Auth::user()->id;
-        $data=Recipe::latest()->paginate(5);
-        $recipe=Recipe::with('getCategory')->where("users_id",$id)->get();
-
-        return view("recipes.user-recipes.myrecipes",["recipe"=>$recipe], compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        // $recipe=Recipe::with('getCategory')->where("users_id",$id)->get();
+        $recipe=Recipe::select('id','name', 'img')->where('users_id', $id)->paginate(8);
+        return view("recipes.user-recipes.index", compact('recipe'));
     }
 
     /**
@@ -40,14 +39,15 @@ class RecipeController extends Controller
     public function create()
 
     {   
-        $recipe= Recipe::all();
-        // $getRecipe=Recipe::with('getRecipe')->get();
-        // $getIngredient=Recipe::with('getIngredient')->get();
-
+        $recipe=Recipe::all();
         $category=Category::all();
         $ingredient=Ingredient::all();
-        $RecipeIngredient=RecipeIngredient::all();
-        return view('recipes.user-recipes.create',['recipe'=>$recipe, "category"=>$category, "ingredient"=>$ingredient,"recipe_ingredient"=>$RecipeIngredient]);
+        return view('recipes.user-recipes.create',
+        [
+        "category"=>$category,
+        "ingredient"=>$ingredient,
+        "recipe"=>$recipe
+        ]);
     }
 
     /**
@@ -58,11 +58,10 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'student_name'          =>  'required',
-        //     'student_email'         =>  'required|email|unique:students',
-        //     'student_image'         =>  'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000'
-        // ]);
+        $request->validate([
+            'img'=>'required|image:jpg,png,jpeg,svg|max:2048|dimensions:
+            in_width=100,min_height=100,max_width=1000,max_height=1000'
+        ]);
         $users_id= Auth::user()->id;
         $file_name = time() . '.' . request()->img->getClientOriginalExtension();
         request()->img->move(public_path('images'), $file_name);
@@ -83,9 +82,20 @@ class RecipeController extends Controller
      * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function show(Recipe $recipe)
+    public function show($id)
     {
-        return view('recipes.user-recipes.show', compact('recipe'));
+        $RecipeData= Recipe::find($id);
+        $Ingredient= Ingredient::orderBy('name', 'asc')->get();
+        $category=Recipe::with('getCategory')->get();
+        $recipe = DB::table("recipe")->where('id',$id)->get();
+        $ingredient = Ingredient::all();
+        return view("recipes.user-recipes.show",
+        [
+        "recipes"=>$recipe,
+        "ingredient"=>$ingredient,
+        "category"=>$category
+        ],
+        compact('recipe','RecipeData', 'Ingredient'));
     }
 
     /**
@@ -96,10 +106,10 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        $recipe= Recipe::all();
         $category=Category::all();
-        $ingredient=Ingredient::all();
-        return view('recipes.user-recipes.create',['recipe'=>$recipe, "category"=>$category, "ingredient"=>$ingredient],compact('recipe'));    }
+        return view('recipes.user-recipes.edit',
+        ['category'=>$category],compact('recipe'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -110,12 +120,10 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        // $request->validate([
-        //     'student_name'      =>  'required',
-        //     'student_email'     =>  'required|email',
-        //     'student_image'     =>  'image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000'
-        // ]);
-
+        $request->validate([
+            'img'=>'image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:
+            min_width=100,min_height=100,max_width=5000,max_height=5000'
+        ]);
         $img = $request->hidden_img;
         if($request->img != '')
         {
@@ -146,46 +154,38 @@ class RecipeController extends Controller
     {
         $recipe= Recipe::all();
         $ingredient=Ingredient::all();
-        $category=Category::all();
-        $data=Recipe::with('getCategory')->get();
-
+        $category=Recipe::with('getCategory')->get();
         $data = Recipe::latest()->paginate(5);
-        return view('recipes.guest-recipes.show',['recipe'=>$recipe,"category"=>$category, "ingredient"=>$ingredient], compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('recipes.guest-recipes.show',
+        [
+        'recipe'=>$recipe,
+        "category"=>$category,
+        "ingredient"=>$ingredient
+        ],
+        compact('data'));    
     }
     public function IDrecipe($id)
     {
         $RecipeData= Recipe::find($id);
-        $Ingredient= Ingredient::orderBy('name', 'asc')->get();
-
+        $ingredient= Ingredient::orderBy('name', 'asc')->get();
         $category=Recipe::with('getCategory')->get();
         $data = DB::table("recipe")->where('id',$id)->get();
         $ingredient = Ingredient::all();
-        return view("recipes.guest-recipes.show-full",["recipes"=>$data,"ingredient"=>$ingredient,"category"=>$category], compact('data','RecipeData', 'Ingredient'));
+        return view("recipes.guest-recipes.show-full",
+        [
+        "recipes"=>$data,
+        "ingredient"=>$ingredient,
+        "category"=>$category
+        ],
+        compact('data','RecipeData', 'ingredient'));
     }
     public function search()
     {
+        $data=Recipe::with('getCategory')->get();
+        $data = Recipe::latest()->paginate(5);
         $search_text=$_GET["query"];
-        $ingredients = Ingredient::where('name','LIKE', '%'.$search_text.'%')->get();
         $recipe = Recipe::where('name','LIKE', '%'.$search_text.'%')->get();
-        $category = Category::where('name','LIKE', '%'.$search_text.'%')->get();
-
-        return view('recipes.search',["ingredients"=>$recipe, "recipe"=>$recipe, "category"=>$recipe], compact('recipe','category', 'ingredients'));
+        return view('recipes.search',
+        ["recipe"=>$recipe], compact('recipe','data'));
     }
-    // public function UserRecipes()
-    //     {
-    //     // $recipe = Recipe::find($id);
-    //     // dd($recipe);
-    //     // return view('recipes.user-recipes.myrecipes')->with('recipe', $recipe);
-    //     $id=Auth::user()->id;
-    //     $data=Recipe::with('getCategory')->get();
-    //     $data=Recipe::latest()->paginate(5);
-    //     // $data=Recipe::all();
-    //     // return view('recipe',['data'=>$data]);
-
-    //     // $category=Category::all();
-    //     $recipe=Recipe::where("users_id",$id)->get();
-    //     return view("recipes.user-recipes.myrecipes",["data"=>$data,"recipe"=>$recipe], compact('data'))->with('i', (request()->input('page', 1) - 1) * 5);
-    // }
-
-
 }

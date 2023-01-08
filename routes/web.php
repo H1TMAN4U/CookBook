@@ -21,36 +21,37 @@ use Illuminate\Support\Facades\View;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::get('show',[RecipeController::class,'guest_recipes'], function () {
     return view('show');
 });
-// Route::get('/show',[RecipeController::class,'guest_recipes']);
+
 Route::get('/show-full/{id}',[RecipeController::class,'IDrecipe']);
 
 Route::get('/search',[RecipeController::class,'search']);
-Route::get('/search/ingredient',[IngredientController::class,'search']);
 
-Route::get('/products', [RecipeIngredientController::class, 'index']);
+// Route::get('/search',[IngredientController::class,'search']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('recipes', RecipeController::class);
-    // Route::resource('recipes', RecipeIngredientController::class, 'store');
 
 });
-Route::get('recipe',[RecipeController::class,'view']);
-Route::get('ingredients',[IngredientController::class, 'view']);
+// Route::get('recipe',[RecipeController::class,'view']);
+// Route::get('ingredients',[IngredientController::class, 'view']);
 
 Route::resource('insertRI',RecipeIngredientController::class);
+
 Route::resource('posts',IngredientController::class);
+
+
 require __DIR__.'/auth.php';
 

@@ -17,10 +17,14 @@ class RecipeIngredientController extends Controller
     public function index()
     {      
         $category=Category::all();
-  
         $ingredient=Ingredient::all();
         $recipe= Recipe::all();
-        return view("recipes.user-recipes.myrecipes",["recipe"=>$recipe, "ingredient"=>$ingredient, "category"=>$category]);
+        return view("recipes.user-recipes.myrecipes",
+        [
+        "recipe"=>$recipe,
+        "ingredient"=>$ingredient,
+        "category"=>$category
+        ]);
     }
 
     /**
@@ -37,7 +41,13 @@ class RecipeIngredientController extends Controller
         $category=Category::all();
         $ingredient=Ingredient::all();
         $RecipeIngredient=RecipeIngredient::all();
-        return view('recipes.user-recipes.myrecipes',['recipe'=>$recipe, "category"=>$category, "ingredient"=>$ingredient,"recipe_ingredient"=>$RecipeIngredient]);
+        return view('recipes.user-recipes.myrecipes',
+        [
+        'recipe'=>$recipe,
+        "category"=>$category,
+        "ingredient"=>$ingredient,
+        "recipe_ingredient"=>$RecipeIngredient
+        ]);
     }
 
     /**
