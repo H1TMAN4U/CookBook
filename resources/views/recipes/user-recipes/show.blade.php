@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8  justify-center flex">
+    <div class="max-w-7xl mx-auto px-4 my-8 sm:px-6 lg:px-8  justify-center flex">
         <div class="max-w-sm w-full lg:max-w-full lg:flex" >
             @foreach ($recipe as $value)
             <div class="h-96 lg:h-auto lg:w-96 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"

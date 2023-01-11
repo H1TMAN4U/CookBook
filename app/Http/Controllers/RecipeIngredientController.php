@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\RecipeIngredient;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeIngredientController extends Controller
 {
@@ -16,15 +17,10 @@ class RecipeIngredientController extends Controller
      */
     public function index()
     {      
-        $category=Category::all();
+        $id=Auth::user()->id;   
+        $recipe=Recipe::select('id','name', 'img')->where('users_id', $id)->get();
         $ingredient=Ingredient::all();
-        $recipe= Recipe::all();
-        return view("recipes.user-recipes.myrecipes",
-        [
-        "recipe"=>$recipe,
-        "ingredient"=>$ingredient,
-        "category"=>$category
-        ]);
+        return view("recipes.user-recipes.create-ingredients",["ingredient"=>$ingredient], compact('recipe'));
     }
 
     /**
@@ -35,18 +31,11 @@ class RecipeIngredientController extends Controller
     public function create()
     {
         $recipe= Recipe::all();
-        // $getRecipe=Recipe::with('getRecipe')->get();
-        // $getIngredient=Recipe::with('getIngredient')->get();
-
-        $category=Category::all();
         $ingredient=Ingredient::all();
-        $RecipeIngredient=RecipeIngredient::all();
         return view('recipes.user-recipes.myrecipes',
         [
         'recipe'=>$recipe,
-        "category"=>$category,
-        "ingredient"=>$ingredient,
-        "recipe_ingredient"=>$RecipeIngredient
+        "ingredient"=>$ingredient
         ]);
     }
 
@@ -62,7 +51,7 @@ class RecipeIngredientController extends Controller
         $recipe->recipe_id = $request->recipe_id;
         $recipe->ingredient_id = $request->ingredient_id;
         $recipe->save();
-        return redirect()->route('recipes.create')->with('success', 'recipe Added successfully.');
+        return redirect()->route('recipe-ingredients.index')->with('success', 'recipe Added successfully.');
     }
 
     /**

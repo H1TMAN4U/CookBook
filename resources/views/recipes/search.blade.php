@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" style="width: 100%;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8" style="width: 100%;">
         @foreach ($recipe as $value )
 		<div class="flex flex-col my-2" style="width: 100%">
 			<a href="show-full/{{$value->id}}" class="flex flex-col items-center bg-gray-100 border rounded-lg shadow-md md:flex-row md:max-full

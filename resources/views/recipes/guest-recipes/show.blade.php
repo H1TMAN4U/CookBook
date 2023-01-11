@@ -1,5 +1,5 @@
 <x-app-layout>
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 break-all " style="width: 100%;">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 break-all " style="width: 100%;">
 		@if(count($data) > 0)
 		@foreach ($data as $value)
 			<div class="flex flex-col my-2" style="width: 100%">

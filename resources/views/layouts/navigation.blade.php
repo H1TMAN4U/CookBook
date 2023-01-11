@@ -48,6 +48,10 @@
                             {{ __('Add new Recipe') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('recipe-ingredients.index')">
+                            {{ __('Add Recipes Ingredients') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('recipes.index')">
                             {{ __('My Recipes') }}
                         </x-dropdown-link>
@@ -118,8 +122,9 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Home') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link a href="/show" :active="request()->routeIs('show') ">
                 {{ __('Recipes') }}
             </x-responsive-nav-link>
@@ -138,6 +143,10 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('recipes.index')">
                     {{ __('My Recipes') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('recipe-ingredients.index')">
+                    {{ __('Add Recipes Ingredients') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

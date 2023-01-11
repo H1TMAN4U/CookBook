@@ -1,10 +1,10 @@
 
 @extends('recipes.user-recipes/master')
 @section('content')
-	<div class="overflow-x-auto relative shadow-md sm:rounded-lg break-all" style="width: 100%;">
+	<div class="w-full overflow-x-auto relative shadow-md sm:rounded-lg break-all my-8">
 		<table class="w-full text-sm text-left text-gray-500 bg-gray-100 ">
 			<thead class="text-xs text-gray-700 uppercase bg-gray-200">
-				<tr class="bg-gray-100 border-b" style="background-color:#99999947">
+				<tr class="bg-gray-200 border-b">
 					<th scope="col" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
 						<a href="{{ route('recipes.create') }}" class="btn btn-success btn-sm float-end">Add</a>
 					</th>

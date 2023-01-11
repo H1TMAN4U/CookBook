@@ -1,7 +1,10 @@
 @extends('recipes.user-recipes/master')
 @section('content')
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center my-8">
     <div href="#" class="block max-w-2xl p-6 bg-white border border-gray-200 rounded-lg shadow-md ">
+		<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Lorem, ipsum dolor sit amet consectetur adipisicing.</h5>
+        <p class="font-normal text-gray-700 py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Rerum ducimus natus magnam, minus et doloremque.</p>
 		<form method="post" action="{{ route('recipes.update', $recipe->id) }}" enctype="multipart/form-data">
 			@csrf
 			@method('PUT')
@@ -22,9 +25,9 @@
 						<label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
 					</div>
 					<div class="px-2 py-2 bg-white rounded-b-lg ">
-						<input type="text" name="description" value="{{ $recipe->description }}" rows="8" class="block w-full px-0 text-sm rounded-b-lg
-						 text-gray-800 bg-white border-0" placeholder="Write an article..." required></textarea>
-					</div>
+						<textarea input type="text" name="description" value="{{ $recipe->description }}" rows="8" class="block w-full px-0 text-sm rounded-b-lg
+						 text-gray-800 bg-white border-0" placeholder="{{ $recipe->description }}" required></textarea>
+					</div>	
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -33,8 +36,8 @@
 						<label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">instructions</label>
 					</div>
 					<div class="px-2 py-2 bg-white rounded-b-lg ">
-						<input type="text" name="instructions" value="{{ $recipe->instructions }}" rows="8" class="block w-full px-0 text-sm rounded-b-lg
-						 text-gray-800 bg-white border-0" placeholder="Write an article..." required></textarea>
+						<textarea input type="text" name="instructions" rows="8" class="block w-full px-0 text-sm rounded-b-lg
+						 text-gray-800 bg-white border-0" placeholder="{{ $recipe->instructions }}" required></textarea>
 					</div>
 				</div>
 			</div>
@@ -57,7 +60,7 @@
 			<div class="text-center">
 				<input type="hidden" name="hidden_id" value="{{ $recipe->id }}" />
 				<input type="submit" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer
-				 bg-gray-50 hover:bg-white" value="Edit" />
+				 bg-gray-50 p-2 hover:bg-white " value="Edit" />
 			</div>	
 		</form>
 	</div>

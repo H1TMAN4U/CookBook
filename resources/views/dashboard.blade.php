@@ -8,8 +8,8 @@
         background-image: linear-gradient(rgb(0 0 0 / 22%), rgb(4 9 30 / 88%)), url("/images/background-image.jpg");   
     }
 </style>
-<section class="intro" style="height: 95vh;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" style="width: 100%;">
+<section class="intro " style="height: 95vh;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 " style="width: 100%;">
         <div id="indicators-carousel" class="relative" data-carousel="static" style="z-index: 0">
             <div class="relative overflow-hidden rounded-lg md:h-96 max-w-full h-auto" style="height: 30rem;">
                 <div class="hidden duration-700 ease-in-out" data-carousel-item="active">

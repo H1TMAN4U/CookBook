@@ -43,12 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('recipes', RecipeController::class);
+    Route::resource('recipe-ingredients',RecipeIngredientController::class);
 
 });
 // Route::get('recipe',[RecipeController::class,'view']);
 // Route::get('ingredients',[IngredientController::class, 'view']);
 
-Route::resource('insertRI',RecipeIngredientController::class);
+
 
 Route::resource('posts',IngredientController::class);
 
