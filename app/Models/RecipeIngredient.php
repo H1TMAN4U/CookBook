@@ -18,17 +18,6 @@ class RecipeIngredient extends Model
     'ingredient_id',
     ];
     use HasFactory;
-
-    // public function getRecipe()
-    // {
-    //   return $this->belongsToMany('recipe_id'); // assuming user_id and task_id as fk
-    // }
-    
-    // // User model
-    // public function getIngredient()
-    // {
-    //   return $this->belongsToMany( 'ingredient_id');
-    // }
 }
 
 

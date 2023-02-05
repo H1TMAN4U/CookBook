@@ -48,10 +48,7 @@ Route::middleware('auth')->group(function () {
 });
 // Route::get('recipe',[RecipeController::class,'view']);
 // Route::get('ingredients',[IngredientController::class, 'view']);
-
-
-
-Route::resource('posts',IngredientController::class);
+// Route::resource('posts',IngredientController::class);
 
 
 require __DIR__.'/auth.php';

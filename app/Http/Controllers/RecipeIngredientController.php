@@ -20,7 +20,8 @@ class RecipeIngredientController extends Controller
         $id=Auth::user()->id;   
         $recipe=Recipe::select('id','name', 'img')->where('users_id', $id)->get();
         $ingredient=Ingredient::all();
-        return view("recipes.user-recipes.create-ingredients",["ingredient"=>$ingredient], compact('recipe'));
+        return view("recipes.user-recipes.add-ingredients",
+        ["ingredient"=>$ingredient], compact('recipe'));
     }
 
     /**

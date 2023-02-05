@@ -37,17 +37,12 @@ class RecipeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-
     {   
         $recipe=Recipe::all();
         $category=Category::all();
-        $ingredient=Ingredient::all();
         return view('recipes.user-recipes.create',
-        [
-        "category"=>$category,
-        "ingredient"=>$ingredient,
-        "recipe"=>$recipe
-        ]);
+        ["category"=>$category,
+        "recipe"=>$recipe]);
     }
 
     /**
@@ -85,17 +80,16 @@ class RecipeController extends Controller
     public function show($id)
     {
         $RecipeData= Recipe::find($id);
-        $Ingredient= Ingredient::orderBy('name', 'asc')->get();
+        $ingredient= Ingredient::orderBy('name', 'asc')->get();
         $category=Recipe::with('getCategory')->get();
         $recipe = DB::table("recipe")->where('id',$id)->get();
-        $ingredient = Ingredient::all();
         return view("recipes.user-recipes.show",
         [
         "recipes"=>$recipe,
         "ingredient"=>$ingredient,
         "category"=>$category
         ],
-        compact('recipe','RecipeData', 'Ingredient'));
+        compact('recipe','RecipeData', 'ingredient'));
     }
 
     /**
@@ -150,42 +144,33 @@ class RecipeController extends Controller
         $recipe->delete();
         return redirect()->route('recipes.index')->with('success', 'Student Data deleted successfully');
     }
+
     public function guest_recipes(Recipe $recipe)
     {
         $recipe= Recipe::all();
-        $ingredient=Ingredient::all();
         $category=Recipe::with('getCategory')->get();
         $data = Recipe::latest()->paginate(5);
         return view('recipes.guest-recipes.show',
-        [
-        'recipe'=>$recipe,
-        "category"=>$category,
-        "ingredient"=>$ingredient
-        ],
+        ["recipe"=>$recipe,"category"=>$category],
         compact('data'));    
     }
     public function IDrecipe($id)
     {
         $RecipeData= Recipe::find($id);
-        $ingredient= Ingredient::orderBy('name', 'asc')->get();
-        $category=Recipe::with('getCategory')->get();
-        $data = DB::table("recipe")->where('id',$id)->get();
-        $ingredient = Ingredient::all();
+        $ingredient= Ingredient::orderBy('name')->get();
+        $recipe = Recipe::with('getCategory')->where('id',$id)->get();
         return view("recipes.guest-recipes.show-full",
-        [
-        "recipes"=>$data,
-        "ingredient"=>$ingredient,
-        "category"=>$category
-        ],
-        compact('data','RecipeData', 'ingredient'));
+        ["recipe"=>$recipe,"ingredient"=>$ingredient,"RecipeData"=>$RecipeData],
+        compact('recipe'));    
     }
+
     public function search()
     {
-        $data=Recipe::with('getCategory')->get();
         $data = Recipe::latest()->paginate(5);
+        $category=Recipe::with('getCategory')->get();
         $search_text=$_GET["query"];
         $recipe = Recipe::where('name','LIKE', '%'.$search_text.'%')->get();
         return view('recipes.search',
-        ["recipe"=>$recipe], compact('recipe','data'));
+        ["recipe"=>$recipe, "category"=>$category], compact('data'));
     }
 }

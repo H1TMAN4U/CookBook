@@ -1,5 +1,5 @@
 <x-app-layout>
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 break-all " style="width: 100%;">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pb-8 break-all " style="width: 100%;">
 		@if(count($data) > 0)
 		@foreach ($data as $value)
 			<div class="flex flex-col my-2" style="width: 100%">
@@ -11,7 +11,8 @@
 					<div class="flex flex-col justify-between p-4 leading-normal ">
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{$value['name']}}</h5>
 						<p class="mb-3 font-normal text-gray-700">{{$value['description']}}</p>
-						<p class="px-2">{{ $value->getCategory->name }}</p>
+						
+						<p class="">{{ $value->getCategory->name }}</p>
 					</div>
 				</div>
 				</a>

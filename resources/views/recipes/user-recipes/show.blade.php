@@ -12,14 +12,6 @@
                             <p class="text-gray-700 text-base p-1">{{$value->description}}</p>
                             <p class="text-gray-700 text-base p-1">{{$value->instructions}}</p>
                         </div>
-
-                    </div>
-                    <div class="flex items-center">
-                        <div class="">
-                            @foreach ($category as $value)
-                            @endforeach
-                            <b class="text-gray-900 leading-none">Category: {{ $value->getCategory->name }}</b>
-                        </div>
                     </div>
                     <div>
                         <b>Ingredients</b>
@@ -31,8 +23,15 @@
                         </div>
                         @endforeach
                     </div>
-                    <div class="flex justify-end">
-                        <p class="text-gray-600">{{$value->created_at}}</p>
+                    <div class="flex justify-between">
+                        <div class="">
+                            @foreach ($category as $value)
+                            @endforeach
+                            <b class="text-gray-900 leading-none">Category: {{ $value->getCategory->name }}</b>
+                        </div>
+                        <div>
+                            <p class="text-gray-600">{{$value->created_at}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
